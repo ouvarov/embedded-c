@@ -15,19 +15,18 @@ const int LED_COUNT = sizeof(LEDS) / sizeof(LEDS[0]);
 const gpio_num_t SEQUENCE[] = {LED_RED, LED_YELLOW, LED_GREEN, LED_YELLOW};
 const int SEQUENCE_COUNT = sizeof(SEQUENCE) / sizeof(SEQUENCE[0]);
 
-bool wait_or_button(int duration_ms)
-{
+bool wait_or_button(int duration_ms) {
     for (int elapsed = 0; elapsed < duration_ms; elapsed += 10) {
         if (gpio_get_level(BUTTON) == 0) {
             return true;
         }
         vTaskDelay(pdMS_TO_TICKS(10));
     }
+
     return false;
 }
 
-void app_main(void)
-{
+void app_main(void) {
     int x = 0;
 
     gpio_reset_pin(BUTTON);
@@ -54,6 +53,7 @@ void app_main(void)
         gpio_set_level(SEQUENCE[x], 0);
 
         x++;
+        
         if (x == SEQUENCE_COUNT) {
             x = 0;
         }
